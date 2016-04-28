@@ -3,6 +3,8 @@ import scipy as sp
 import scipy.misc
 import scipy.ndimage
 
+from ..filters.anisotropic_diffusion import anisotropic_diffusion
+
 #%matplotlib inline
 im = sp.misc.imread('Rat_Hippocampal_Neuron_he.png')
 plt.imshow(im)
