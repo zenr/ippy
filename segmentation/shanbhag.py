@@ -1,8 +1,8 @@
 import numpy as np
 import scipy.misc
 
-def Shanbhag(imgdata) :
-    """Returns a segmented binary image using the Shanbhag algorithm
+def shanbhag(imgdata) :
+    """Returns a binary segmentation threshold using the Shanbhag algorithm
     given imgdata as a grayscale image of type numpy.ndarray
     """
     # get normalized histogram
@@ -40,14 +40,13 @@ def Shanbhag(imgdata) :
         if (tot_ent < min_ent) :
             min_ent = tot_ent
             threshold = i
-    
-    # return segmented binary image
-    return imgdata > threshold
+
+    return threshold
 
 # test case        
 from scipy.misc.pilutil import Image
 
 a = Image.open('Rat_Hippocampal_Neuron.png').convert('L')
 adata = scipy.misc.fromimage(a)
-outimg = scipy.misc.toimage(Shanbhag(adata))
+outimg = scipy.misc.toimage(adata > shanbhag(adata))
 outimg.show()
