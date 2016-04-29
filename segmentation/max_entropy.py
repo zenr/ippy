@@ -25,7 +25,7 @@ def max_entropy(data):
     cdf = data.astype(np.float).cumsum()
 
     # find histogram's nonzero area
-    valid_idx = np.nonzero(data)
+    valid_idx = np.nonzero(data)[0]
     first_bin = valid_idx[0]
     last_bin = valid_idx[-1]
 
