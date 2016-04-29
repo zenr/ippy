@@ -26,21 +26,22 @@ def max_entropy(data):
 
     # find histogram's nonzero area
     valid_idx = np.nonzero(data)
-    first_bin = np.min(valid_idx)
-    last_bin = np.max(valid_idx)
+    first_bin = valid_idx[0]
+    last_bin = valid_idx[-1]
 
     # initialize search for maximum
     max_ent, threshold = 0, 0
 
     for it in range(first_bin, last_bin + 1):
         # Background (dark)
-        hist_range = data[:it + 1] / cdf[it]  # normalize witin selected range
-        hist_range = hist_range[hist_range != 0]  # remove all zero elements
+        hist_range = data[:it + 1]
+        hist_range = hist_range[hist_range != 0] / cdf[it]  # normalize within selected range & remove all 0 elements
         tot_ent = -np.sum(hist_range * np.log(hist_range))  # background entropy
 
         # Foreground/Object (bright)
-        hist_range = data[it + 1:] / (cdf[last_bin] - cdf[it])  # normalize witin selected range
-        hist_range = hist_range[hist_range != 0]  # remove all zero elements
+        hist_range = data[it + 1:]
+        # normalize within selected range & remove all 0 elements
+        hist_range = hist_range[hist_range != 0] / (cdf[last_bin] - cdf[it])
         tot_ent -= np.sum(hist_range * np.log(hist_range))  # accumulate object entropy
 
         # find max
